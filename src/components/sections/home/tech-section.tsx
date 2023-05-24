@@ -31,10 +31,11 @@ const TechSection = (props: Props) => {
     }
 
     return (
-        <section ref={techSectionRef} id="tech-section" className="relative h-64 w-full bg-muted to-muted px-4">
+        <section ref={techSectionRef} id="tech-section" className="relative h-64 w-full bg-muted to-muted">
             <div className={cn("absolute top-0 left-0 h-full w-1/4 bg-gradient-to-r from-muted to-transparent z-10 opacity-100 duration-500 pointer-events-none", scrollStatus === 'start' && 'opacity-0')} />
             <div className={cn("absolute top-0 right-0 h-full w-1/4 bg-gradient-to-l from-muted to-transparent z-10 opacity-100 duration-500 pointer-events-none", scrollStatus === 'end' && 'opacity-0')} />
-            <div onScroll={handleScroll} className="h-full px-10 py-6 flex items-center gap-4 overflow-x-auto">
+            <div className='absolute top-5 left-10 text-2xl font-cal font-bold'>Tech I Like</div>
+            <div onScroll={handleScroll} className="h-full px-10 pb-6 pt-12 flex items-center gap-4 overflow-x-auto">
                 {techs.map(tech => (
                     <>
                         <div className="hidden dark:flex my-card h-[80%] w-[150px] flex-col justify-center items-center gap-2 font-semibold">
