@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import Link from '@/components/ui/link';
+import { default as NextLink } from 'next/link';
 import * as React from "react";
 
 import { Button, buttonVariants } from "./ui/button";
@@ -52,7 +53,7 @@ export function MobileDropdown(props: {
                       <Link
                         href={item.href}
                         className={cn(
-                          "flex py-1 text-base font-medium text-muted-foreground transition-colors hover:text-primary",
+                          "flex py-1 text-base font-medium text-muted-foreground transition-colors hover:text-primary underline-offset-4 before:bottom-1",
                           item.href === pathname && "text-foreground"
                         )}
                         target={item.external ? "_blank" : ""}
@@ -74,7 +75,7 @@ export function MobileDropdown(props: {
           ))}
         </ScrollArea>
         <div className="border-t pt-4 flex items-center">
-          <Link
+          <NextLink
             href={siteConfig.links.linkedin}
             target="_blank"
             rel="noreferrer"
@@ -85,19 +86,19 @@ export function MobileDropdown(props: {
           >
             <Icons.linkedIn className="h-5 w-5" />
             <span className="sr-only">LinkedIn</span>
-          </Link>
-          <Link
+          </NextLink>
+          <NextLink
             href={siteConfig.links.github}
             target="_blank"
             rel="noreferrer"
-            className={buttonVariants({
+            className={cn(buttonVariants({
               size: "sm",
               variant: "ghost",
-            })}
+            }), 'bg-red-500')}
           >
             <Icons.gitHub className="h-5 w-5" />
             <span className="sr-only">GitHub</span>
-          </Link>
+          </NextLink>
           <ThemeToggle />
         </div>
       </PopoverContent>

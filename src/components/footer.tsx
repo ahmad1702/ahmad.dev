@@ -1,7 +1,7 @@
 import { siteConfig } from "@/app/site-config"
 import { Separator } from "@/components/ui/separator"
-import Link from "next/link"
 import Balancer from "react-wrap-balancer"
+import Link from "./ui/link"
 
 const Footer = () => {
     return (
@@ -23,9 +23,9 @@ const Footer = () => {
                         ))}
 
                         <li className="pb-1">
-                            <a href="/privacy-policy">
+                            <Link href="/privacy-policy">
                                 Privacy Policy
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -36,50 +36,48 @@ const Footer = () => {
                     <ul className="py-4 sm:text-s pt-4 text-gray-400">
                         <p className="pb-1">
                             Built by{" "}
-                            <a
+                            <Link
                                 href={'https://www.github.com/ahmad1702'}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="font-medium underline underline-offset-2 hover:text-foreground underline-fade-in"
                             >
                                 Ahmad Sandid
-                            </a>
+                            </Link>
                             .
                         </p>
                         <p className="pb-1">
                             The source code is available on{" "}
-                            <a
+                            <Link
                                 href={siteConfig.links.github}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="font-medium underline underline-offset-4"
                             >
                                 GitHub
-                            </a>
+                            </Link>
                             .
                         </p>
                         <p className="pb-1">
                             Hosted on{" "}
-                            <a
+                            <Link
                                 href="https://vercel.com/"
                                 target="_blank"
                                 rel="noreferrer"
-                                className="font-medium underline underline-offset-4"
                             >
                                 Vercel
-                            </a>
+                            </Link>
                             .
                         </p>
                         <p className="pb-1">
                             Using the{" "}
-                            <a
+                            <Link
                                 href="https://create.t3.gg/"
                                 target="_blank"
                                 rel="noreferrer"
                                 className="font-medium underline underline-offset-4"
                             >
                                 T3 Stack
-                            </a>
+                            </Link>
                             .
                         </p>
                     </ul>

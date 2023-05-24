@@ -4,44 +4,16 @@ import Balancer from "react-wrap-balancer";
 import { siteConfig } from "@/app/site-config";
 import { Icons } from "@/components/icons";
 import LearnMoreButton from "@/components/learn-more-button";
+import TechSection from "@/components/sections/home/tech-section";
 import ResumeSection from "@/components/sections/resume/resume-section";
 import { buttonVariants } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { cn } from "@/lib/cn";
 import { myJobsBeLike } from "@/lib/jobs";
-import { Tech, techList } from "@/lib/tech";
 import Image from "next/image";
 
-const TitleHeader = ({ className }: { className?: string }) => {
-  return (
-    <div
-      className="w-full max-w-5xl"
-    >
-      <h1
-        className="font-cal animate-fade-up bg-foreground dark:bg-white dark-gradient-to-tr from-indigo-400 to-fuchsia-500 bg-clip-text text-center text-5xl/[3rem] font-bold text-transparent opacity-0 drop-shadow-sm lg:text-5xl/[5rem]"
-        style={{ animationDelay: "0.20s", animationFillMode: "forwards" }}
-      >
-        <Balancer className="">
-          <br />
-          sleak and responsive designs{" "}
-          <div className="w-36 h-[3px] bg-black rounded-md mx-auto mt-5"></div>
-          <span className="underline decoration-destructive decoration-wavy decoration-from-font underline-offset-4">
-            robust
-          </span>{" "}
-          and efficient code
-        </Balancer>
-      </h1>
-    </div>
-  )
-}
 
 const IndexPage = () => {
-  const techs: Tech[] = []
-  for (const datum of techList) {
-    for (const tech of datum.techs) {
-      techs.push(tech)
-    }
-  }
   return (
     <>
       <section className="relative h-[calc(100vh-4rem)]" id="home">
@@ -84,18 +56,7 @@ const IndexPage = () => {
         </Container>
       </section >
       <ResumeSection jobs={myJobsBeLike} />
-      <section id="tech-section" className="relative h-64 w-full bg-muted to-muted px-4">
-        <div className="absolute top-0 left-0 h-full w-1/4 bg-gradient-to-r from-muted to-transparent z-10" />
-        <div className="absolute top-0 right-0 h-full w-1/4 bg-gradient-to-l from-muted to-transparent z-10" />
-        <div className="h-full px-10 py-6 flex items-center gap-4 overflow-x-auto">
-          {techs.map(tech => (
-            <div className="my-card h-[80%] w-[150px] flex flex-col justify-center items-center gap-2 font-semibold">
-              <Image className="saturate-0 object-contain" src={`/assets/img/techs/${tech.imagePath}`} width={200} height={200} alt="" />
-              {tech.name}
-            </div>
-          ))}
-        </div>
-      </section>
+      <TechSection />
     </>
   );
 }

@@ -62,7 +62,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body
           className={cn(
-            "min-h-screen font-sans antialiased",
+            "min-h-screen font-sans antialiased overscroll-x-none",
             fontSans.variable,
             fontCal.variable,
             fontMono.variable

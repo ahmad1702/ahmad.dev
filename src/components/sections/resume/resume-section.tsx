@@ -128,18 +128,21 @@ const ResumeSection = ({ jobs }: ResumeSectionProps) => {
                                                     <h2 className="text-3xl md:text-4xl md:mb-3 font-bold leading-8 tracking-tight font-cal text-gray-900 dark:text-gray-100">
                                                         {jobTitle} at {company}
                                                     </h2>
-                                                    <div className="flex flex-wrap">
+                                                    <div className="flex flex-wrap text-muted-foreground dark:text-gray-400">
                                                         {techList.map(({ name }) => (
-                                                            <button
-                                                                key={`${jobKey}-${name}`}
-                                                                onClick={() => {
-                                                                    setSearchValue(name)
-                                                                    scrollToID('resume')
-                                                                }}
-                                                                className="mr-[0.15rem] cursor-pointer text-sm font-medium text-foreground uppercase underline underline-offset-3 hover:bg-input rounded-md px-2 -mx-2 py-1 duration-150"
-                                                            >
-                                                                {name}
-                                                            </button>
+                                                            <>
+                                                                <span
+                                                                    key={`${jobKey}-${name}`}
+                                                                    onClick={() => {
+                                                                        setSearchValue(name)
+                                                                        scrollToID('resume')
+                                                                    }}
+                                                                    className="font-medium underline underline-offset-[2px] cursor-pointer hover:text-foreground duration-300 underline-fade-in before:bottom-[2.5px]"
+                                                                >
+                                                                    {name}
+                                                                </span>
+                                                                <span className="mx-[3px] font-extralight text-sm">•</span>
+                                                            </>
                                                         ))}
                                                     </div>
                                                 </div>

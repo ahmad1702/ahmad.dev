@@ -1,9 +1,8 @@
-import * as React from "react";
-import Link from "next/link";
 import type { MDXComponents } from "mdx/types";
 
 import { Callout } from "@/components/mdx/callout";
 import { Codeblock } from "@/components/mdx/code-block";
+import Link from "@/components/ui/link";
 
 // This file is required to use MDX in `app` directory.
 export function useMDXComponents(components: MDXComponents): MDXComponents {
