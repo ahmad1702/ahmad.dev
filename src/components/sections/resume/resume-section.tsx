@@ -76,7 +76,7 @@ const ResumeSection = ({ jobs }: ResumeSectionProps) => {
                                 aria-label="search experience"
                                 value={searchValue}
                                 onChange={(e) => setSearchValue(e.target.value)}
-                                className="-background md:text-lg md:p-4"
+                                className="bg-background md:p-4"
                             />
                             {searchValue.length > 0 && (
                                 <Button onClick={() => setSearchValue('')} variant='ghost' size="sm" className="absolute top-1/2 -translate-y-1/2 right-2 text-sm py-1 h-auto outline outline-border">

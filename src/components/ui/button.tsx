@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/cn";
 
 const buttonVariants = cva(
-  "flex items-center justify-center rounded-full text-sm font-medium duratino-300 active:scale-[97%] hover:scale-105 duration-150",
+  "flex items-center justify-center rounded-lg text-sm font-medium duratino-300 active:scale-[97%] hover:scale-105 duration-150",
   {
     variants: {
       variant: {

@@ -9,6 +9,7 @@ const LearnMoreButton = () => {
         <Button
             onClick={() => scrollToID('resume')}
             size="lg"
+            className="w-full md:w-auto rounded-full"
         >
             Learn More
             <ArrowDown className="ml-1 h-4 w-4" />

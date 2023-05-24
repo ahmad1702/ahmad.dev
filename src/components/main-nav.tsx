@@ -1,10 +1,9 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 
-import { cn } from "@/lib/cn";
 import { Icons } from "@/components/icons";
+import { cn } from "@/lib/cn";
 import { usePathname } from "next/navigation";
 
 export interface NavItem {
@@ -30,7 +29,7 @@ export function MainNav(props: { items: NavItem[] }) {
                   key={index}
                   href={item.href}
                   className={cn(
-                    "text-muted-foreground flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background hover:bg-accent hover:text-accent-foreground h-9 px-3",
+                    "text-muted-foreground flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background hover:bg-accent hover:text-accent-foreground h-9 px-3 duration-150",
                     item.disabled && "cursor-not-allowed opacity-80",
                     item.href === pathname && "text-foreground"
                   )}
