@@ -5,10 +5,10 @@ export const siteConfig = {
   description:
     "Never build your apps with invalid environment variables again. Validate and transform your environment with the full power of Zod.",
   mainNav: [
-    {
-      title: "Projects",
-      href: "/projects",
-    },
+    // {
+    //   title: "Projects",
+    //   href: "/projects",
+    // },
   ],
   sidebarNav: [
     {
@@ -19,11 +19,11 @@ export const siteConfig = {
           href: "/#resume",
           items: [],
         },
-        {
-          title: "Projects",
-          href: "/projects",
-          items: [],
-        },
+        // {
+        //   title: "Projects",
+        //   href: "/projects",
+        //   items: [],
+        // },
       ],
     },
     {
