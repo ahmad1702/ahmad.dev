@@ -9,7 +9,7 @@ export const siteConfig = {
     //   title: "Projects",
     //   href: "/projects",
     // },
-  ],
+  ] as { title: string; href: string }[],
   sidebarNav: [
     {
       title: "Experience",
