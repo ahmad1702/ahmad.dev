@@ -74,7 +74,7 @@ export function MobileDropdown(props: {
             </div>
           ))}
         </ScrollArea>
-        <div className="border-t pt-4 flex items-center">
+        <div className="border-t pt-4 flex items-center gap-1">
           <NextLink
             href={siteConfig.links.linkedin}
             target="_blank"
@@ -94,7 +94,7 @@ export function MobileDropdown(props: {
             className={cn(buttonVariants({
               size: "sm",
               variant: "ghost",
-            }), 'bg-red-500')}
+            }))}
           >
             <Icons.gitHub className="h-5 w-5" />
             <span className="sr-only">GitHub</span>

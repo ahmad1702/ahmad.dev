@@ -1,8 +1,10 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/cn"
 import formatDate from "@/lib/date"
 import { Job } from "@/lib/jobs"
+import { SetState } from "@/lib/types"
 import { scrollToID, toTitleCase } from "@/lib/utils"
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
@@ -12,6 +14,26 @@ import { useMemo, useState } from "react"
 
 type ResumeSectionProps = {
     jobs: Job[]
+}
+
+const SearchFilterInput = ({ searchValue, setSearchValue }: { searchValue: string; setSearchValue: SetState<string> }) => {
+    return (
+        <>
+            <Input
+                placeholder="Search..."
+                aria-label="search experience"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                className="bg-background md:p-4"
+            />
+            {searchValue.length > 0 && (
+                <Button onClick={() => setSearchValue('')} variant='ghost' size="sm" className="absolute top-1/2 -translate-y-1/2 right-2 text-sm py-1 h-auto outline outline-border">
+                    <X className="h-4 w-4" />
+                    Clear
+                </Button>
+            )}
+        </>
+    )
 }
 
 const ResumeSection = ({ jobs }: ResumeSectionProps) => {
@@ -43,7 +65,6 @@ const ResumeSection = ({ jobs }: ResumeSectionProps) => {
                     name: 'jobNotes',
                     getFn: (job) => {
                         const jobNotes = job.jobNotes.map(({ note }) => note).join(' ')
-                        console.log(jobNotes)
                         return jobNotes
                     },
                 }
@@ -53,7 +74,6 @@ const ResumeSection = ({ jobs }: ResumeSectionProps) => {
         const fuse = new Fuse<Job>(jobs, options)
 
         const result = fuse.search(searchValue)
-        console.log('result:', result)
         return result.map(({ item }) => item)
     }, [searchValue, jobs])
     return (
@@ -64,35 +84,32 @@ const ResumeSection = ({ jobs }: ResumeSectionProps) => {
 
             <div className="bg-gradient-to-r from-transparent via-violet-400 to-transparent w-1 h-full absolute left-0 top-0" />
 
-            <div className="container max-w-7xl mx-auto">
-                <div className="space-y-2 pt-0 pb-8 md:space-y-5">
-                    <div className="flex items-center justify-between space-x-10">
+            <div className="container max-w-7xl mx-auto pb-10">
+                <div className="space-y-2 pt-0 md:pb-8 md:space-y-5">
+                    <div className="md:flex items-center justify-between space-x-10">
                         <h1 className="font-cal text-4xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
                             Experience
                         </h1>
-                        <div className="w-96 relative">
-                            <Input
-                                placeholder="Search..."
-                                aria-label="search experience"
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
-                                className="bg-background md:p-4"
+                        <div className="w-96 relative hidden md:block">
+                            <SearchFilterInput
+                                searchValue={searchValue}
+                                setSearchValue={setSearchValue}
                             />
-                            {searchValue.length > 0 && (
-                                <Button onClick={() => setSearchValue('')} variant='ghost' size="sm" className="absolute top-1/2 -translate-y-1/2 right-2 text-sm py-1 h-auto outline outline-border">
-                                    <X className="h-4 w-4" />
-                                    Clear
-                                </Button>
-                            )}
                         </div>
                     </div>
                     <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
                         A comprehensive snapshot of my career journey, showcasing past jobs and the tech I've used.
                     </p>
                 </div>
+                <div className="relative mt-3 mb-5 md:hidden">
+                    <SearchFilterInput
+                        searchValue={searchValue}
+                        setSearchValue={setSearchValue}
+                    />
+                </div>
                 <ul ref={listParent} className="divide-y divide-gray-200 dark:divide-gray-700">
                     {!filteredJobs.length && <div className="mb-10 font-bold text-xl">No Results Found</div>}
-                    {filteredJobs.map((job) => {
+                    {filteredJobs.map((job, i) => {
                         const { company, jobTitle, fromDate, toDate, jobNotes, tech } = job
                         const techList: { name: string, category: keyof typeof tech }[] = []
 
@@ -106,7 +123,7 @@ const ResumeSection = ({ jobs }: ResumeSectionProps) => {
                         }
                         const jobKey = `${jobTitle} at ${company}`
                         return (
-                            <li key={jobKey} className="py-12">
+                            <li key={jobKey} className={cn(i !== 0 ? "py-12" : 'pb-12')}>
                                 <article>
                                     <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                                         <dl className="flex">
@@ -152,7 +169,6 @@ const ResumeSection = ({ jobs }: ResumeSectionProps) => {
                                                             <li key={`${jobKey}-${note.slice(0, 10)}`}>{note}</li>
                                                         ))}
                                                     </ul>
-
                                                 </div>
                                             </div>
                                         </div>
