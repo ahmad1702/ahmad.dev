@@ -25,7 +25,7 @@ Check out my portfolio site live at [ahmadsandid.com](https://ahmadsandid.com) t
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-portfolio.git
+   git clone https://github.com/ahmad1702/ahmad.dev.git
    ```
 
 ### Usage
