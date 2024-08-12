@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/cn";
+import { CSPostHogProvider } from "@/lib/posthog";
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
@@ -60,24 +61,28 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <>
       <html lang="en" suppressHydrationWarning>
         <head />
-        <body
-          className={cn(
-            "min-h-screen font-sans antialiased overscroll-x-none",
-            fontSans.variable,
-            fontCal.variable,
-            fontMono.variable
-          )}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1 min-h-[calc(100vh-4rem)]">{children}</div>
-              <Footer />
-            </div>
-            <TailwindIndicator />
-          </ThemeProvider>
-          <Analytics />
-        </body>
+        <CSPostHogProvider>
+          <body
+            className={cn(
+              "min-h-screen font-sans antialiased overscroll-x-none",
+              fontSans.variable,
+              fontCal.variable,
+              fontMono.variable
+            )}
+          >
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <div className="flex-1 min-h-[calc(100vh-4rem)]">
+                  {children}
+                </div>
+                <Footer />
+              </div>
+              <TailwindIndicator />
+            </ThemeProvider>
+            <Analytics />
+          </body>
+        </CSPostHogProvider>
       </html>
     </>
   );
