@@ -11,6 +11,7 @@ const nextConfig = {
   redirects: () => [
     { source: "/docs", destination: "/docs/introduction", permanent: true },
   ],
+  transpilePackages: ["three"],
 };
 
 export default withMdx({

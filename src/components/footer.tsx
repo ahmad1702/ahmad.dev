@@ -1,95 +1,64 @@
-import { siteConfig } from "@/app/site-config"
-import { Separator } from "@/components/ui/separator"
-import Balancer from "react-wrap-balancer"
-import Link from "./ui/link"
+import { siteConfig } from "@/app/site-config";
+import { MailIcon } from "lucide-react";
+import NextLink from "next/link";
+import Balancer from "react-wrap-balancer";
+import { Icons } from "./icons";
+import { Button, buttonVariants } from "./ui/button";
+import { Separator } from "./ui/separator";
 
 const Footer = () => {
-    return (
-        <footer className="border-t py-10">
-            <div className="md:flex w-4/5 mx-auto gap-4">
-                <div>
-                    <h3 className="text-l sm:font-bold text-muted-foreground">
-                        Pages
-                    </h3>
-                    <ul className="py-4 sm:text-s pt-4 text-gray-400">
-                        {siteConfig.mainNav.map((page) => (
-                            <li key={page.href} className="pb-1">
-                                {page.href !== undefined ? (
-                                    <Link href={page.href}>
-                                        {page.title}
-                                    </Link>
-                                ) : page.title}
-                            </li>
-                        ))}
+  return (
+    <footer className="border-t py-10">
+      <div className="container max-w-7xl mx-auto space-y-4">
+        <NextLink href="/">
+          <Button variant="ghost" className="-ml-4 flex gap-2">
+            <Icons.logo className="h-6 w-6" />
+            <span className="font-bold text-xl">{siteConfig.name}</span>
+          </Button>
+        </NextLink>
+        <div className="flex items-center gap-2">
+          <NextLink
+            href={siteConfig.links.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className={buttonVariants({
+              size: "sm",
+              variant: "secondary",
+            })}
+          >
+            <Icons.linkedIn className="h-5 w-5" />
+            <span className="sr-only">LinkedIn</span>
+          </NextLink>
+          <NextLink
+            href={siteConfig.links.github}
+            target="_blank"
+            rel="noreferrer"
+            className={buttonVariants({
+              size: "sm",
+              variant: "secondary",
+            })}
+          >
+            <Icons.gitHub className="h-5 w-5" />
+            <span className="sr-only">GitHub</span>
+          </NextLink>
+        </div>
 
-                        <li className="pb-1">
-                            <Link href="/privacy-policy">
-                                Privacy Policy
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 className="text-l sm:font-bold text-muted-foreground">
-                        Credits
-                    </h3>
-                    <ul className="py-4 sm:text-s pt-4 text-gray-400">
-                        <p className="pb-1">
-                            Built by{" "}
-                            <Link
-                                href={'https://www.github.com/ahmad1702'}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="font-medium underline underline-offset-2 hover:text-foreground underline-fade-in"
-                            >
-                                Ahmad Sandid
-                            </Link>
-                            .
-                        </p>
-                        <p className="pb-1">
-                            The source code is available on{" "}
-                            <Link
-                                href={siteConfig.links.github}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                GitHub
-                            </Link>
-                            .
-                        </p>
-                        <p className="pb-1">
-                            Hosted on{" "}
-                            <Link
-                                href="https://vercel.com/"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                Vercel
-                            </Link>
-                            .
-                        </p>
-                        <p className="pb-1">
-                            Using the{" "}
-                            <Link
-                                href="https://create.t3.gg/"
-                                target="_blank"
-                                rel="noreferrer"
-                                className="font-medium underline underline-offset-4"
-                            >
-                                T3 Stack
-                            </Link>
-                            .
-                        </p>
-                    </ul>
-                </div>
-            </div>
-            <div className="mx-auto w-[calc(80%_+_10px)] mt-5">
-                <Separator />
-                <Balancer className="my-3 text-gray-400">
-                    &copy; 2023 Croisswapp. All rights reserved.
-                </Balancer>
-            </div>
-        </footer>
-    )
-}
-export default Footer
+        <div className="py-4 flex items-center justify-between">
+          {/* <Separator /> */}
+          <Balancer className="my-3 text-muted-foreground text-xs">
+            &copy; 2024 Ahmad Sandid. All rights reserved.
+          </Balancer>
+          <NextLink
+            href="mailto:ahmad1702@gmail.com"
+            className="text-xs text-muted-foreground flex items-center gap-2 hover:text-foreground underline underline-offset-2 duration-150"
+          >
+            <MailIcon className="h-4 w-4" />
+            <Separator orientation="vertical" className="h-4" />
+            ahmad1702@gmail.com
+          </NextLink>
+        </div>
+      </div>
+    </footer>
+  );
+};
+export default Footer;

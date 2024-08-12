@@ -8,10 +8,10 @@ import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Urbanist } from "next/font/google";
 import localFont from "next/font/local";
 
-const fontSans = Inter({
+const fontSans = Urbanist({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -71,9 +71,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="relative flex min-h-screen flex-col">
               <SiteHeader />
-              <div className="flex-1 min-h-[calc(100vh-4rem)]">
-                {children}
-              </div>
+              <div className="flex-1 min-h-[calc(100vh-4rem)]">{children}</div>
               <Footer />
             </div>
             <TailwindIndicator />

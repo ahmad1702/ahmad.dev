@@ -1,186 +1,120 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/cn"
-import formatDate from "@/lib/date"
-import { Job } from "@/lib/jobs"
-import { SetState } from "@/lib/types"
-import { scrollToID, toTitleCase } from "@/lib/utils"
-
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-import Fuse from 'fuse.js'
-import { X } from "lucide-react"
-import { useMemo, useState } from "react"
+import { cn } from "@/lib/cn";
+import formatDate from "@/lib/date";
+import { Job } from "@/lib/jobs";
+import { toTitleCase } from "@/lib/utils";
 
 type ResumeSectionProps = {
-    jobs: Job[]
-}
-
-const SearchFilterInput = ({ searchValue, setSearchValue }: { searchValue: string; setSearchValue: SetState<string> }) => {
-    return (
-        <>
-            <Input
-                placeholder="Search..."
-                aria-label="search experience"
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                className="bg-background md:p-4"
-            />
-            {searchValue.length > 0 && (
-                <Button onClick={() => setSearchValue('')} variant='ghost' size="sm" className="absolute top-1/2 -translate-y-1/2 right-2 text-sm py-1 h-auto outline outline-border">
-                    <X className="h-4 w-4" />
-                    Clear
-                </Button>
-            )}
-        </>
-    )
-}
+  jobs: Job[];
+};
 
 const ResumeSection = ({ jobs }: ResumeSectionProps) => {
-    const [searchValue, setSearchValue] = useState('')
-    const [listParent] = useAutoAnimate()
+  return (
+    <section id="resume" className="relative overflow-hidden px-4">
+      <div className="bg-gradient-to-r from-transparent via-violet-400 to-transparent h-px" />
+      <div className="absolute top-[150px] -z-10 left-3/4 md:left-1/2 w-[500px] h-[300px] md:w-[1052px] md:h-[300px] bg-[radial-gradient(closest-side,#d0a1ff,#f0e0ff,transparent)] dark:bg-[radial-gradient(closest-side,#f5f3ff,#fdfbff,transparent)] -translate-y-[300px] -translate-x-1/2 dark-bg-radial-gradient" />
+      <div className="relative pt-16 md:pt-8 lg:pb-12"></div>
 
-    const filteredJobs = useMemo(() => {
-        if (searchValue.length === 0) return jobs
-        const options: Fuse.IFuseOptions<Job> = {
-            includeScore: true,
-            threshold: 0.4,
-            keys: [
-                'company',
-                'jobTitle',
-                {
-                    name: 'tech',
-                    getFn: (job) => {
-                        const techList: string[] = []
+      <div className="bg-gradient-to-r from-transparent via-violet-400 to-transparent w-1 h-full absolute left-0 top-0" />
 
-                        for (const techType of Object.keys(job.tech)) {
-                            for (const techEntry of job.tech[techType]) {
-                                techList.push(techEntry)
-                            }
-                        }
-                        return techList
-                    }
-                },
-                {
-                    name: 'jobNotes',
-                    getFn: (job) => {
-                        const jobNotes = job.jobNotes.map(({ note }) => note).join(' ')
-                        return jobNotes
-                    },
-                }
-            ]
-        }
+      <div className="container max-w-7xl mx-auto pb-10">
+        <div className="space-y-2 pt-0 md:pb-8 md:space-y-5">
+          <div className="md:flex items-center justify-between space-x-10">
+            <h1 className="font-cal text-4xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+              Experience
+            </h1>
+          </div>
+          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+            A comprehensive snapshot of my career journey, showcasing past jobs
+            and the tech I've used.
+          </p>
+        </div>
+        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+          {jobs.map((job, i) => {
+            const { company, jobTitle, fromDate, toDate, jobNotes, tech } = job;
 
-        const fuse = new Fuse<Job>(jobs, options)
-
-        const result = fuse.search(searchValue)
-        return result.map(({ item }) => item)
-    }, [searchValue, jobs])
-    return (
-        <section id="resume" className="relative overflow-hidden px-4">
-            <div className="bg-gradient-to-r from-transparent via-violet-400 to-transparent h-px" />
-            <div className="absolute top-[150px] -z-10 left-3/4 md:left-1/2 w-[500px] h-[300px] md:w-[1052px] md:h-[300px] bg-[radial-gradient(closest-side,#d0a1ff,#f0e0ff,transparent)] dark:bg-[radial-gradient(closest-side,#f5f3ff,#fdfbff,transparent)] -translate-y-[300px] -translate-x-1/2 dark-bg-radial-gradient" />
-            <div className="relative pt-16 md:pt-8 lg:pb-12"></div>
-
-            <div className="bg-gradient-to-r from-transparent via-violet-400 to-transparent w-1 h-full absolute left-0 top-0" />
-
-            <div className="container max-w-7xl mx-auto pb-10">
-                <div className="space-y-2 pt-0 md:pb-8 md:space-y-5">
-                    <div className="md:flex items-center justify-between space-x-10">
-                        <h1 className="font-cal text-4xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-                            Experience
-                        </h1>
-                        <div className="w-96 relative hidden md:block">
-                            <SearchFilterInput
-                                searchValue={searchValue}
-                                setSearchValue={setSearchValue}
-                            />
+            const jobKey = `${jobTitle} at ${company}`;
+            return (
+              <li key={company} className={cn(i !== 0 ? "py-12" : "pb-12")}>
+                <article>
+                  <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+                    <dl className="flex">
+                      <dt className="sr-only">
+                        Started ${jobTitle} role at ${company} on
+                      </dt>
+                      <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                        <time dateTime={fromDate.value.toISOString()}>
+                          {formatDate(fromDate.value, {
+                            excludeMonth: fromDate.excludeMonth,
+                          })}
+                        </time>
+                      </dd>
+                      <span className="mx-1">-</span>
+                      <dt className="sr-only">
+                        Ended ${jobTitle} role at ${company} on
+                      </dt>
+                      <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                        {typeof toDate.value === "string" ? (
+                          toTitleCase(toDate.value)
+                        ) : (
+                          <time dateTime={toDate.value.toISOString()}>
+                            {formatDate(toDate.value, {
+                              excludeMonth: toDate.excludeMonth,
+                            })}
+                          </time>
+                        )}
+                      </dd>
+                    </dl>
+                    <div className="space-y-5 xl:col-span-3">
+                      <div className="space-y-6">
+                        <div>
+                          <div className="flex w-full items-center gap-2">
+                            <h2 className="text-3xl md:text-4xl md:mb-3 font-bold leading-8 tracking-tight font-cal text-gray-900 dark:text-gray-100">
+                              {company}
+                            </h2>
+                            <span className="bg-foreground bg-opacity-50 w-0.5 h-8 mb-1 mx-1"></span>
+                            <h4 className="text-xl font-light mb-2">
+                              {jobTitle}
+                            </h4>
+                          </div>
+                          <ul
+                            id="tech-list"
+                            className="flex flex-wrap text-muted-foreground dark:text-gray-400"
+                          >
+                            {tech.map((name) => (
+                              <>
+                                <li
+                                  key={`${jobKey}-${name}`}
+                                  className="font-medium underline underline-offset-[2px] cursor-default hover:text-foreground duration-300 underline-fade-in before:bottom-[2.5px]"
+                                >
+                                  {name}
+                                </li>
+                                <span className="mx-[3px] font-extralight text-sm">
+                                  •
+                                </span>
+                              </>
+                            ))}
+                          </ul>
                         </div>
+                        <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                          <ul className="list-disc">
+                            {jobNotes.map((note) => (
+                              <li key={note}>
+                                {note}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-                        A comprehensive snapshot of my career journey, showcasing past jobs and the tech I've used.
-                    </p>
-                </div>
-                <div className="relative mt-3 mb-5 md:hidden">
-                    <SearchFilterInput
-                        searchValue={searchValue}
-                        setSearchValue={setSearchValue}
-                    />
-                </div>
-                <ul ref={listParent} className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {!filteredJobs.length && <div className="mb-10 font-bold text-xl">No Results Found</div>}
-                    {filteredJobs.map((job, i) => {
-                        const { company, jobTitle, fromDate, toDate, jobNotes, tech } = job
-                        const techList: { name: string, category: keyof typeof tech }[] = []
+                  </div>
+                </article>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  );
+};
 
-                        for (const techType of Object.keys(tech)) {
-                            for (const techEntry of tech[techType]) {
-                                techList.push({
-                                    name: techEntry,
-                                    category: techType
-                                })
-                            }
-                        }
-                        const jobKey = `${jobTitle} at ${company}`
-                        return (
-                            <li key={jobKey} className={cn(i !== 0 ? "py-12" : 'pb-12')}>
-                                <article>
-                                    <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                                        <dl className="flex">
-                                            <dt className="sr-only">Started ${jobTitle} role at ${company} on</dt>
-                                            <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                                                <time dateTime={fromDate.toISOString()}>{formatDate(fromDate)}</time>
-                                            </dd>
-                                            <span className="mx-1">-</span>
-                                            <dt className="sr-only">Ended ${jobTitle} role at ${company} on</dt>
-                                            <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                                                {typeof toDate === 'string' ? toTitleCase(toDate) : (
-                                                    <time dateTime={toDate.toISOString()}>{formatDate(toDate)}</time>
-                                                )}
-                                            </dd>
-                                        </dl>
-                                        <div className="space-y-5 xl:col-span-3">
-                                            <div className="space-y-6">
-                                                <div>
-                                                    <h2 className="text-3xl md:text-4xl md:mb-3 font-bold leading-8 tracking-tight font-cal text-gray-900 dark:text-gray-100">
-                                                        {jobTitle} at {company}
-                                                    </h2>
-                                                    <div className="flex flex-wrap text-muted-foreground dark:text-gray-400">
-                                                        {techList.map(({ name }) => (
-                                                            <>
-                                                                <span
-                                                                    key={`${jobKey}-${name}`}
-                                                                    onClick={() => {
-                                                                        setSearchValue(name)
-                                                                        scrollToID('resume')
-                                                                    }}
-                                                                    className="font-medium underline underline-offset-[2px] cursor-pointer hover:text-foreground duration-300 underline-fade-in before:bottom-[2.5px]"
-                                                                >
-                                                                    {name}
-                                                                </span>
-                                                                <span className="mx-[3px] font-extralight text-sm">•</span>
-                                                            </>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                                <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                                                    <ul className="list-disc">
-                                                        {jobNotes.map(({ note }) => (
-                                                            <li key={`${jobKey}-${note.slice(0, 10)}`}>{note}</li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
-        </section>
-    )
-}
-
-export default ResumeSection
+export default ResumeSection;

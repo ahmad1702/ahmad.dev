@@ -95,38 +95,46 @@
     @apply origin-center;
     transition: transform 0.1s ease-in-out;
   }
+
   .hamburger svg path {
     @apply opacity-100;
     transition: transform 0.1s ease-in-out 0.1s, opacity 0.1s ease-in-out;
   }
+
   .hamburger svg.open path {
     transition: transform 0.1s ease-in-out, opacity 0s ease-in-out;
   }
+
   .hamburger svg.open g {
     transition: transform 0.1s ease-in-out 0.1s;
   }
-  .hamburger svg.open > path {
+
+  .hamburger svg.open>path {
     @apply opacity-0;
   }
-  .hamburger svg.open > g:nth-of-type(1) {
+
+  .hamburger svg.open>g:nth-of-type(1) {
     @apply rotate-45;
   }
-  .hamburger svg.open > g:nth-of-type(1) path {
+
+  .hamburger svg.open>g:nth-of-type(1) path {
     transform: translate3d(0, 6px, 0);
   }
-  .hamburger svg.open > g:nth-of-type(2) {
+
+  .hamburger svg.open>g:nth-of-type(2) {
     @apply -rotate-45;
   }
-  .hamburger svg.open > g:nth-of-type(2) path {
+
+  .hamburger svg.open>g:nth-of-type(2) path {
     transform: translate3d(0, -6px, 0);
   }
 
-  pre > code {
+  pre>code {
     counter-reset: line;
     padding: unset !important;
   }
 
-  pre > code > .line::before {
+  pre>code>.line::before {
     counter-increment: line;
     content: counter(line);
 
@@ -155,15 +163,15 @@
     @apply pl-12;
   }
 
-  [data-rehype-pretty-code-title] ~ pre {
+  [data-rehype-pretty-code-title]~pre {
     @apply mt-0 rounded-t-none;
   }
 
-  [data-rehype-pretty-code-title] ~ [data-language-icon][data-theme="light"] {
+  [data-rehype-pretty-code-title]~[data-language-icon][data-theme="light"] {
     @apply block dark:hidden;
   }
 
-  [data-rehype-pretty-code-title] ~ [data-language-icon][data-theme="dark"] {
+  [data-rehype-pretty-code-title]~[data-language-icon][data-theme="dark"] {
     @apply hidden dark:block;
   }
 
@@ -177,10 +185,11 @@
 }
 
 [data-rehype-pretty-code-fragment] .line--highlighted {
-  @apply rounded p-1  bg-muted-foreground/40;
+  @apply rounded p-1 bg-muted-foreground/40;
 }
+
 [data-rehype-pretty-code-fragment] .word {
-  @apply rounded p-1  bg-muted-foreground/40;
+  @apply rounded p-1 bg-muted-foreground/40;
 }
 
 .my-card {
@@ -198,11 +207,9 @@
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: radial-gradient(
-    75% 75% at 25% 15%,
-    #fff 0,
-    hsla(0, 0%, 100%, 0.3) 100%
-  );
+  background: radial-gradient(75% 75% at 25% 15%,
+      #fff 0,
+      hsla(0, 0%, 100%, 0.3) 100%);
   -webkit-mask: linear-gradient(#000, #000) content-box,
     linear-gradient(#000, #000);
   mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
@@ -213,12 +220,10 @@
 }
 
 .dark .dark-bg-radial-gradient {
-  background-image: radial-gradient(
-    closest-side,
-    rgba(76, 29, 149, 0.4),
-    rgba(76, 29, 149, 0.1),
-    transparent
-  ) !important;
+  background-image: radial-gradient(closest-side,
+      rgba(76, 29, 149, 0.4),
+      rgba(76, 29, 149, 0.1),
+      transparent) !important;
 }
 
 /* Fade In Underline Hover */
@@ -226,6 +231,7 @@
   position: relative;
   /* text-decoration: none; */
 }
+
 .underline-fade-in:hover {
   text-decoration: none !important;
 }
@@ -265,15 +271,19 @@
   0% {
     opacity: 100%;
   }
+
   45% {
     opacity: 0%;
   }
+
   50% {
     opacity: 100%;
   }
+
   95% {
     opacity: 0%;
   }
+
   100% {
     opacity: 0%;
   }
@@ -283,4 +293,22 @@
   animation-name: text-pulse-transition;
   animation-duration: 10s;
   animation-iteration-count: infinite;
+}
+
+/* Trail */
+.trailsText {
+  position: relative;
+  width: 100%;
+  /* height: 80px; */
+  /* line-height: 80px; */
+  /* font-size: 6em; */
+  /* font-weight: 800; */
+  /* letter-spacing: -0.05em; */
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+.trailsText>div {
+  padding-right: 0.05em;
+  overflow: hidden;
 }
