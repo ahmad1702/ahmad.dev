@@ -1,10 +1,10 @@
 "use client";
 
-import { a, useSpring } from "@react-spring/web";
 import Trail from "@/components/trail";
 import { cn } from "@/lib/cn";
+import { a, useSpring } from "@react-spring/web";
 import { OrbitControls, Stats } from "@react-three/drei";
-import { Canvas, extend, Vector3, useThree, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree, Vector3 } from "@react-three/fiber";
 import {
   BrightnessContrast,
   EffectComposer,
@@ -16,53 +16,21 @@ import { BlendFunction } from "postprocessing";
 import { ComponentRef, Suspense, useEffect, useRef, useState } from "react";
 import { GLman } from "../models/GLman";
 
-import CameraControls from "camera-controls";
 import * as Three from "three";
 
-CameraControls.install({ THREE: Three });
-extend({ CameraControls });
-
 function Rig() {
-  const { camera, pointer } = useThree()
+  const { camera, pointer } = useThree();
 
-  const vec = new Three.Vector3()
+  const vec = new Three.Vector3();
 
   return useFrame(() => {
-    camera.position.lerp(vec.set(pointer.x, pointer.y, camera.position.z), 0.05)
-    camera.lookAt(0, 0, 0)
-  })
-}
-
-
-const CursorPositionControls = () => {
-  const [mousePos, setMousePost] = useState({ x: 0, y: 0 });
-  const ref = useRef<any>(null);
-  const camera = useThree((state) => state.camera);
-  const gl = useThree((state) => state.gl);
-
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      setMousePost({ x: event.clientX, y: event.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
-  useFrame((state, delta) => {
-    if (!ref.current) return;
-    // update camera angles according to mouse position
-    //ref.current.azimuthAngle = -state.pointer.x;
-    //ref.current.polarAngle = Math.PI / 2 + state.pointer.y;
-    //
-    //ref.current.azimuthAngle = -mousePos.x;
-    //ref.current.polarAngle = Math.PI / 2 + mousePos.y;
-    ref.current.update(delta);
+    camera.position.lerp(
+      vec.set(pointer.x, pointer.y, camera.position.z),
+      0.05
+    );
+    camera.lookAt(0, 0, 0);
   });
-
-  return <cameraControls ref={ref} args={[camera, gl.domElement]} />;
-};
+}
 
 type Props = {};
 
@@ -85,13 +53,16 @@ const Header3d = (props: Props) => {
     }, 1000);
   };
 
-  const modelCoverSpring = useSpring({
-    from: { opacity: 0, transform: "translateY(-100%)" },
-    to: { opacity: 1, transform: "translateY(0%)" },
-    config: {
-      duration: 1000,
+  const modelCoverSpring = useSpring(
+    {
+      from: { opacity: 0, transform: "translateY(-100%)" },
+      to: { opacity: 1, transform: "translateY(0%)" },
+      config: {
+        duration: 1000,
+      },
     },
-  }, [open]);
+    [open]
+  );
 
   const handleMouseMove = (event) => {
     if (!orbitControlsRef.current) return;
@@ -111,9 +82,7 @@ const Header3d = (props: Props) => {
     setOpen(true);
   }, []); */
   return (
-    <div
-      className="h-full w-full relative overflow-hidden"
-    >
+    <div className="h-full w-full relative overflow-hidden">
       <div
         className={cn(
           "absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2  hidden lg:flex flex-col justify-between p-4 pointer-events-none"
@@ -145,18 +114,15 @@ const Header3d = (props: Props) => {
         //   eventSource={document.getElementById("root") ?? undefined}
         eventPrefix="client"
       >
-        <directionalLight
-          intensity={0.5}
-          position={[0, 0, 1]}
-        />
+        <directionalLight intensity={0.5} position={[0, 0, 1]} />
         <Suspense fallback={null}>
           <GLman
             meshProps={{
               onAfterRender: showText,
               scale: 10,
             }}
-          //scale={0.08}
-          //rotation={[-0.9, 0, 0]}
+            //scale={0.08}
+            //rotation={[-0.9, 0, 0]}
           />
           <EffectComposer multisampling={0}>
             <SMAA />
