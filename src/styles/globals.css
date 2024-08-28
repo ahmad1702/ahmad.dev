@@ -1,0 +1,314 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --background-focus: 0 0% 80%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 316 0% 8%;
+    --foreground: 0 0% 100%;
+    --muted: 306 0% 4%;
+    --muted-foreground: 299 0% 91%;
+
+    --accent: 302 0% 17%;
+    --accent-foreground: 296 0% 98%;
+
+    --popover: 306 0% 4%;
+    --popover-foreground: 306 0% 65.1%;
+
+    --border: 299 0% 17%;
+    --input: 299 0% 17%;
+
+    --card: 306 0% 4%;
+    --card-foreground: 299 0% 91%;
+    --primary: 299 0% 98%;
+    --primary-foreground: 302 0% 1.2%;
+
+    --secondary: 302 9% 11.2%;
+    --secondary-foreground: 302 0% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 299 34% 17%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .step {
+    counter-increment: step;
+  }
+
+  .step:before {
+    @apply absolute w-8 h-8 bg-accent font-cal rounded-full font-medium text-center text-base inline-flex items-center justify-center -indent-px;
+    @apply ml-[-41px];
+    content: counter(step);
+  }
+}
+
+@layer components {
+  /* Hamburger menu icon animation */
+
+  .hamburger svg g {
+    @apply origin-center;
+    transition: transform 0.1s ease-in-out;
+  }
+
+  .hamburger svg path {
+    @apply opacity-100;
+    transition: transform 0.1s ease-in-out 0.1s, opacity 0.1s ease-in-out;
+  }
+
+  .hamburger svg.open path {
+    transition: transform 0.1s ease-in-out, opacity 0s ease-in-out;
+  }
+
+  .hamburger svg.open g {
+    transition: transform 0.1s ease-in-out 0.1s;
+  }
+
+  .hamburger svg.open>path {
+    @apply opacity-0;
+  }
+
+  .hamburger svg.open>g:nth-of-type(1) {
+    @apply rotate-45;
+  }
+
+  .hamburger svg.open>g:nth-of-type(1) path {
+    transform: translate3d(0, 6px, 0);
+  }
+
+  .hamburger svg.open>g:nth-of-type(2) {
+    @apply -rotate-45;
+  }
+
+  .hamburger svg.open>g:nth-of-type(2) path {
+    transform: translate3d(0, -6px, 0);
+  }
+
+  pre>code {
+    counter-reset: line;
+    padding: unset !important;
+  }
+
+  pre>code>.line::before {
+    counter-increment: line;
+    content: counter(line);
+
+    /* Other styling */
+    display: inline-block;
+    width: 1rem;
+    margin-right: 1rem;
+    text-align: right;
+    color: var(--muted-foreground);
+  }
+
+  [data-rehype-pretty-code-fragment] {
+    @apply relative;
+  }
+
+  [data-language-icon] {
+    @apply hidden;
+  }
+
+  [data-rehype-pretty-code-title] {
+    padding: 0.75rem 0 0.75rem 2.5rem;
+    @apply mt-4 rounded-t-lg border border-b-0 bg-accent font-cal;
+  }
+
+  [data-rehype-pretty-code-title]:has(+ [data-language-icon]) {
+    @apply pl-12;
+  }
+
+  [data-rehype-pretty-code-title]~pre {
+    @apply mt-0 rounded-t-none;
+  }
+
+  [data-rehype-pretty-code-title]~[data-language-icon][data-theme="light"] {
+    @apply block dark:hidden;
+  }
+
+  [data-rehype-pretty-code-title]~[data-language-icon][data-theme="dark"] {
+    @apply hidden dark:block;
+  }
+
+  [data-theme="light"]:not([data-language-icon]) {
+    @apply block dark:hidden;
+  }
+
+  [data-theme="dark"]:not([data-language-icon]) {
+    @apply hidden dark:block;
+  }
+}
+
+[data-rehype-pretty-code-fragment] .line--highlighted {
+  @apply rounded p-1 bg-muted-foreground/40;
+}
+
+[data-rehype-pretty-code-fragment] .word {
+  @apply rounded p-1 bg-muted-foreground/40;
+}
+
+.my-card {
+  position: relative;
+  padding: 40px;
+  border-radius: 8px;
+  transition: background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0 0 0 1px transparent, 0 2px 4px transparent,
+    0 12px 24px transparent;
+}
+
+.my-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(75% 75% at 25% 15%,
+      #fff 0,
+      hsla(0, 0%, 100%, 0.3) 100%);
+  -webkit-mask: linear-gradient(#000, #000) content-box,
+    linear-gradient(#000, #000);
+  mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.dark .dark-bg-radial-gradient {
+  background-image: radial-gradient(closest-side,
+      rgba(76, 29, 149, 0.4),
+      rgba(76, 29, 149, 0.1),
+      transparent) !important;
+}
+
+/* Fade In Underline Hover */
+.underline-fade-in {
+  position: relative;
+  /* text-decoration: none; */
+}
+
+.underline-fade-in:hover {
+  text-decoration: none !important;
+}
+
+.underline-fade-in::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: hsl(var(--foreground));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.underline-fade-in:hover::before {
+  transform: scaleX(1);
+}
+
+.mask {
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.mask-squircle {
+  -webkit-mask-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjAwJyBoZWlnaHQ9JzIwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMTAwIDBDMjAgMCAwIDIwIDAgMTAwczIwIDEwMCAxMDAgMTAwIDEwMC0yMCAxMDAtMTAwUzE4MCAwIDEwMCAwWicvPjwvc3ZnPg==);
+  mask-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjAwJyBoZWlnaHQ9JzIwMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMTAwIDBDMjAgMCAwIDIwIDAgMTAwczIwIDEwMCAxMDAgMTAwIDEwMC0yMCAxMDAtMTAwUzE4MCAwIDEwMCAwWicvPjwvc3ZnPg==);
+}
+
+@keyframes text-pulse-transition {
+  0% {
+    opacity: 100%;
+  }
+
+  45% {
+    opacity: 0%;
+  }
+
+  50% {
+    opacity: 100%;
+  }
+
+  95% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 0%;
+  }
+}
+
+.pulse-me {
+  animation-name: text-pulse-transition;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+}
+
+/* Trail */
+.trailsText {
+  position: relative;
+  width: 100%;
+  /* height: 80px; */
+  /* line-height: 80px; */
+  /* font-size: 6em; */
+  /* font-weight: 800; */
+  /* letter-spacing: -0.05em; */
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+.trailsText>div {
+  padding-right: 0.05em;
+  overflow: hidden;
+}
